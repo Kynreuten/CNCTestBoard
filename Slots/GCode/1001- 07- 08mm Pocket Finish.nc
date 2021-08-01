@@ -13,11 +13,11 @@ G20
 (rapid moves is reduced to match the feedrate of cutting)
 (moves, which can increase machining time. Unrestricted rapid)
 (moves are available with a Fusion 360 Subscription.)
-G0 Z15
+G0 Z0.5
 
 (0.8mm Pocket Finish)
 M9
-T7 M6
+T7
 S10000 M3
 G54
 M9
@@ -94,6 +94,6 @@ X0.2327 Y0.2033 Z-0.0741 I-0.0031
 X0.232 Y0.2039 Z-0.0721 I-0.0025 J-0.0019
 G1 Z0.175
 M9
-G0 Z15
+G0 Z0.5
 M30
 %

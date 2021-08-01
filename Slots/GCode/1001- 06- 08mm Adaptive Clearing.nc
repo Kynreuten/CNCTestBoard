@@ -13,11 +13,11 @@ G20
 (rapid moves is reduced to match the feedrate of cutting)
 (moves, which can increase machining time. Unrestricted rapid)
 (moves are available with a Fusion 360 Subscription.)
-G0 Z15
+G0 Z0.5
 
 (0.8mm Adaptive Clear)
 M9
-T7 M6
+T7
 S10000 M3
 G54
 M9
@@ -224,6 +224,6 @@ X0.2112 Y0.1863 Z-0.0381
 X0.2114 Y0.1862 Z-0.0369
 Z0.175
 M9
-G0 Z15
+G0 Z0.5
 M30
 %

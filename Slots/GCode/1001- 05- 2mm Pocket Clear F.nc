@@ -1,6 +1,6 @@
 %
 (1001)
-(Round 001 - Pocket Finish 2mm)
+(Round 001)
 (Machine)
 (  vendor: SainSmart)
 (  model: Genmitsu 3018)
@@ -13,11 +13,11 @@ G20
 (rapid moves is reduced to match the feedrate of cutting)
 (moves, which can increase machining time. Unrestricted rapid)
 (moves are available with a Fusion 360 Subscription.)
-G0 Z15
+G0 Z0.5
 
 (2mm Pocket Finish)
 M9
-T3 M6
+T3
 S10000 M3
 G54
 M9
@@ -793,6 +793,6 @@ X0.9208 Y0.4642 Z-0.4215 I0.0034 J-0.0071
 X0.9202 Y0.4635 Z-0.4179 I0.0055 J-0.0056
 G1 Z0.175
 M9
-G0 Z15
+G0 Z0.5
 M30
 %
