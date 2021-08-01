@@ -1,5 +1,5 @@
 (1001)
-(Round 001 - 1/4" Facing)
+(Round 001 - Facing 1/4in straight)
 (Machine)
 (  vendor: SainSmart)
 (  model: Genmitsu 3018)
@@ -20,8 +20,8 @@ T26
 S10000 M3
 G54
 G0 X3.6625 Y0.2041
-Z0.6
-G1 Z0.2 F4.72
+Z0.175
+G1 Z0.025 F4.72
 Z0
 G18 G3 X3.6375 Z-0.025 I-0.025 K0
 G1 X3.5
@@ -55,7 +55,7 @@ G1 X3.5
 G3 X3.5 Y3.3789 I0 J0.1134
 G1 X0.1
 G18 G3 X0.075 Z0 I0 K0.025
-G1 Z0.6
+G1 Z0.175
 G17
 G28 G91 Z0
 G90
