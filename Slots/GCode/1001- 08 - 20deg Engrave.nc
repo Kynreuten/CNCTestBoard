@@ -1,4 +1,3 @@
-%
 (1001)
 (Round 001 - Engraving 20deg carver)
 (Machine)
@@ -945,4 +944,3 @@ Z0.175
 M9
 G0 Z0.5
 M30
-%
