@@ -9,7 +9,7 @@ namespace GoldenLlama.Cnc
             if (string.IsNullOrWhiteSpace(prefix))
                 return formatted;
             else
-                return $"{prefix} {formatted}";
+                return $"{prefix}{formatted}";
         }
         
         public static string FormatCode(this double? value, string prefix = null) {

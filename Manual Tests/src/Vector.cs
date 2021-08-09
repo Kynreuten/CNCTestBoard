@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 
 namespace GoldenLlama.Cnc
@@ -12,13 +13,13 @@ namespace GoldenLlama.Cnc
         public double? FeedRate { get; set; }
 
         public Vector() { }
-        public Vector(double x, double y, double z)
+        public Vector(double? x, double? y, double? z)
         {
             X = x;
             Y = y;
             Z = z;
         }
-        public Vector(double x, double y, double z, double feedRate)
+        public Vector(double? x, double? y, double? z, double? feedRate)
             : this(x, y, z)
         {
             FeedRate = feedRate;
@@ -31,11 +32,14 @@ namespace GoldenLlama.Cnc
 
         public override string ToString()
         {
-            return String.Concat(
+            var ops = new string[] {
                 X.FormatCode(OtherCode.X_Axis),
                 Y.FormatCode(OtherCode.Y_Axis),
                 Z.FormatCode(OtherCode.Z_Axis),
                 FeedRate.FormatCode(OtherCode.FeedRate)
+            };
+            return String.Join(" ",
+                ops.Where(o => !string.IsNullOrWhiteSpace(o))
             );
         }
 

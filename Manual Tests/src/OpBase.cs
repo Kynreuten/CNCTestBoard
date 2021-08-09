@@ -77,8 +77,8 @@ namespace GoldenLlama.Cnc.Test
             // We want this to be done in Absolute terms!
             sb.AppendLine(ToClearanceHeight());
 
-            sb.AppendLine(RunOp.RapidTo(new Vector { X = 0, Y = 0 }))
-                                .Extend(GCode.AbsoluteCommand);
+            sb.AppendLine(RunOp.RapidTo(new Vector { X = 0, Y = 0 })
+                                .Extend(GCode.AbsoluteCommand));
             EstimatedLocation.X = 0;
             EstimatedLocation.Z = 0;
             sb.AppendLine(ToRetractHeight());
@@ -93,11 +93,11 @@ namespace GoldenLlama.Cnc.Test
         /// <returns>The string to do this by.</returns>
         protected string GoHome()
         {
-            var opString = GoSafeHome()
-                    .CutTo(new Vector { Z = 0 })
-                    .Extend(GCode.AbsoluteCommand);
+            var sb = new StringBuilder(GoSafeHome());
+            sb.Append(RunOp.CutTo(new Vector { Z = 0 })
+                        .Extend(GCode.AbsoluteCommand));
             EstimatedLocation.Z = 0;
-            return opString;
+            return sb.ToString();
         }
 
         /// <summary>
@@ -105,7 +105,8 @@ namespace GoldenLlama.Cnc.Test
         /// </summary>
         /// <param name="comment">The comment text to format</param>
         /// <returns>String of the comment to be written as GCode.</returns>
-        protected string WriteComment(string comment) {
+        protected string WriteComment(string comment)
+        {
             return $"({comment})";
         }
 
@@ -114,7 +115,8 @@ namespace GoldenLlama.Cnc.Test
         /// Handles updating EstimatedLocation.
         /// </summary>
         /// <returns>String for the operation.</returns>
-        protected string EndOperation() {
+        protected string EndOperation()
+        {
             var opString = String.Join(Environment.NewLine,
                 new string[] {
                     GoSafeHome(),

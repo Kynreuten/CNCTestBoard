@@ -15,7 +15,7 @@ namespace GoldenLlama.Cnc.Test
         /// </summary>
         public Vector StartLocation { get; set; } = new Vector(0, 0, 0);
         public double FeedRateInitial { get; set; } = 4.87;
-        public double FeedRateIncrement { get; set; } = this.FeedRateInitial * 0.25;
+        public double FeedRateIncrement { get; set; } = 4.87 * 0.25;
 
         public int PauseTimeInitial { get; set; } = 500;
         public int PauseTimeIncrement { get; set; } = 500;
@@ -42,14 +42,17 @@ namespace GoldenLlama.Cnc.Test
             //TODO: Write out the comment block?
 
             // Apply our settings
+            sb.AppendLine(WriteComment("Settings"));
             sb.AppendLine(RunOp.Tool(1));
             sb.AppendLine(GCode.PlaneXY);
             sb.AppendLine(GCode.InchUnits);
             sb.AppendLine(RunOp.SpindleSpeed(SpindleSpeed)
-                                .Extend(MCode.SpindleOnClockwise)
-                                .FeedRate(FeedRateInitial));
+                                .Extend(MCode.SpindleOnClockwise));
+            sb.AppendLine(RunOp.FeedRate(FeedRateInitial));
+            sb.AppendLine();
 
             // Go Home
+            sb.AppendLine(WriteComment("Going Home"));
             sb.AppendLine(GoHome());
             sb.AppendLine();
             sb.AppendLine(WriteComment("Beginning Test"));
@@ -63,9 +66,14 @@ namespace GoldenLlama.Cnc.Test
                 sb.AppendLine(RunOp.CutTo(new Vector { Z = -1 * StepDown })
                                     .Extend(GCode.RelativeCommand));
                 EstimatedLocation.Z -= StepDown;
+                if (i % 5 == 0) {
+                    sb.AppendLine(WriteComment($"Current Location (est): {this.EstimatedLocation}"));
+                }
+
                 // Move proper distance on chosen axis
                 var cutDistance = TestDistance * (isPositive ? 1 : -1);
-                sb.AppendLine(RunOp.CutTo(new Vector { X = cutDistance }));
+                sb.AppendLine(RunOp.CutTo(new Vector { X = cutDistance })
+                                    .Extend(GCode.RelativeCommand));
                 EstimatedLocation.X += cutDistance;
                 // Flip our sign
                 isPositive = !isPositive;
@@ -81,12 +89,17 @@ namespace GoldenLlama.Cnc.Test
                     sb.AppendLine(MoveOver());
                 }
                 // Check our lateral offset
-                if (EstimaedLocation.Y > StartLocation.Y + MaxLateralDistance)
+                if (EstimatedLocation.Y > StartLocation.Y + MaxLateralDistance)
                 {
                     sb.AppendLine(WriteComment($"Aborting loop due to exceeding max lateral motion (Y-Axis position over {MaxLateralDistance}"));
                     break;
                 }
             }
+            
+            sb.AppendLine(WriteComment($"Operation Complete. Reseting to start."));
+            sb.AppendLine(WriteComment($"Final Location (est): {this.EstimatedLocation}"));
+            sb.AppendLine(EndOperation());
+            sb.AppendLine(WriteComment("END"));
 
             return sb.ToString();
         }

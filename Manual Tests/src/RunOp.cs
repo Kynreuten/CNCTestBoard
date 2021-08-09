@@ -8,48 +8,48 @@ namespace GoldenLlama.Cnc
         public static string Extend(string existingOp, string newOp)
         {
             return !string.IsNullOrWhiteSpace(existingOp)
-                ? $"existingOp "
-                : string.Empty;
+                ? $"{existingOp} {newOp}"
+                : newOp;
         }
 
-        public static string Tool(int toolNumber, string existingOp = string.Empty)
+        public static string Tool(int toolNumber, string existingOp = null)
         {
             return Extend(existingOp, $"{OtherCode.Tool}{toolNumber}");
         }
 
-        public static string Dwell(int pauseMilliseconds, string existingOp = string.Empty)
+        public static string Dwell(int pauseMilliseconds, string existingOp = null)
         {
             return Extend(existingOp, $"{GCode.Dwell} {OtherCode.PauseMs}{pauseMilliseconds}");
         }
 
-        public static string SpindleSpeed(int rpms, string existingOp = string.Empty)
+        public static string SpindleSpeed(int rpms, string existingOp = null)
         {
             return Extend(existingOp, $"S{rpms}");
         }
 
-        public static string FeedRate(double feedValue, string existingOp = string.Empty)
+        public static string FeedRate(double feedValue, string existingOp = null)
         {
             return Extend(existingOp, feedValue.FormatCode(OtherCode.FeedRate));
         }
 
-        public static string XValue(double x, string existingOp = string.Empty)
+        public static string XValue(double x, string existingOp = null)
         {
             return Extend(existingOp, x.FormatCode(OtherCode.X_Axis));
         }
-        public static string YValue(double y, string existingOp = string.Empty)
+        public static string YValue(double y, string existingOp = null)
         {
             return Extend(existingOp, y.FormatCode(OtherCode.Y_Axis));
         }
-        public static string ZValue(double z, string existingOp = string.Empty)
+        public static string ZValue(double z, string existingOp = null)
         {
             return Extend(existingOp, z.FormatCode(OtherCode.Z_Axis));
         }
 
-        public static string RapidTo(Vector vector, string existingOp = string.Empty)
+        public static string RapidTo(Vector vector, string existingOp = null)
         {
             return Extend(existingOp, $"{GCode.FastMove} {vector}");
         }
-        public static string CutTo(Vector vector, string existingOp = string.Empty)
+        public static string CutTo(Vector vector, string existingOp = null)
         {
             return Extend(existingOp, $"{GCode.ControlledMove} {vector}");
         }
@@ -59,7 +59,7 @@ namespace GoldenLlama.Cnc
     public static class RunOpStringExtensions
     {
 
-        public static string Extend(string existingOp, string newOp)
+        public static string Extend(this string existingOp, string newOp)
         {
             return RunOp.Extend(existingOp, newOp);
         }
@@ -74,7 +74,7 @@ namespace GoldenLlama.Cnc
             return RunOp.SpindleSpeed(rpms, existingOp);
         }
 
-        public static string FeedRate(this string existingOp, int feedValue)
+        public static string FeedRate(this string existingOp, double feedValue)
         {
             return RunOp.FeedRate(feedValue, existingOp);
         }
@@ -94,11 +94,11 @@ namespace GoldenLlama.Cnc
 
         public static string RapidTo(this string existingOp, Vector vector)
         {
-            return RunOp.RapidTo(vector.ToString(), existingOp);
+            return RunOp.RapidTo(vector, existingOp);
         }
         public static string CutTo(this string existingOp, Vector vector)
         {
-            return RunOp.CutTo(vector.ToString(), existingOp);
+            return RunOp.CutTo(vector, existingOp);
         }
     }
 }
