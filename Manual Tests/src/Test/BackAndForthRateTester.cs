@@ -17,9 +17,9 @@ namespace GoldenLlama.Cnc.Test
         public double FeedRateInitial { get; set; } = 4.87;
         public double FeedRateIncrement { get; set; } = 4.87 * 0.25;
 
-        public int PauseTimeInitial { get; set; } = 500;
-        public int PauseTimeIncrement { get; set; } = 500;
-        public int PauseTimeMax { get; set; } = 5000;
+        public int PauseTimeInitial { get; set; } = 1;
+        public int PauseTimeIncrement { get; set; } = 1;
+        public int PauseTimeMax { get; set; } = 5;
 
         /// <summary>
         /// How far down to move on the primary axis per round. Defaults to 2"
@@ -36,6 +36,7 @@ namespace GoldenLlama.Cnc.Test
         public string GenerateTest()
         {
             StartLocation = new Vector(EstimatedLocation);
+            FeedRate = FeedRateInitial;
 
             StringBuilder sb = new StringBuilder();
 
@@ -67,7 +68,7 @@ namespace GoldenLlama.Cnc.Test
                                     .Extend(GCode.RelativeCommand));
                 EstimatedLocation.Z -= StepDown;
                 if (i % 5 == 0) {
-                    sb.AppendLine(WriteComment($"Current Location (est): {this.EstimatedLocation}"));
+                    sb.AppendLine(WriteComment($"Current Location: {this.EstimatedLocation}"));
                 }
 
                 // Move proper distance on chosen axis
@@ -94,10 +95,14 @@ namespace GoldenLlama.Cnc.Test
                     sb.AppendLine(WriteComment($"Aborting loop due to exceeding max lateral motion (Y-Axis position over {MaxLateralDistance}"));
                     break;
                 }
+
+                // Up our feed rate!
+                FeedRate += FeedRateIncrement;
+                sb.AppendLine(RunOp.FeedRate(FeedRate));
             }
             
             sb.AppendLine(WriteComment($"Operation Complete. Reseting to start."));
-            sb.AppendLine(WriteComment($"Final Location (est): {this.EstimatedLocation}"));
+            sb.AppendLine(WriteComment($"Final Location: {this.EstimatedLocation}"));
             sb.AppendLine(EndOperation());
             sb.AppendLine(WriteComment("END"));
 
