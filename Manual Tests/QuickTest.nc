@@ -14,6 +14,10 @@ G20
 (moves are available with a Fusion 360 Subscription.)
 G0 Z0.5
 
+
+(Bouncing up in speed by 1.18 each step.)
+(Pauses between, pause length increases steadily)
+
 (In We Go)
 M9
 T1
@@ -29,24 +33,49 @@ G91 (Change to relative move)
 G1 Z-0.02 F4.72 (Move down by Step-down)
 G1 X2 F4.72 (Move across X-axis)
 G04 P500
-G1 Z-0.02 (Down by Step-depth)
-G1 X-2 F7.08 (Back to our starting point, but faster)
-G04 P1000
 
 ([01])
+G1 Z-0.02 (Down by Step-depth)
+G1 X-2 F5.9
+G04 P1000
+
+([02])
+G1 Z-0.02 (Down by Step-depth)
+G1 X2 F7.08
+G04 P1500
+
+([03])
+G1 Z-0.02 (Down by Step-depth)
+G1 X-2 F8.26
+G04 P2000
+
+([04])
 G1 Z-0.02 F4.72 (Move down by Step-down)
 G1 X2 F9.44 (Move across X-axis)
-G04 P1500
+G04 P2500
+
+([05])
+G1 Z-0.02 F4.72 (Move down by Step-down)
+G1 X-2 F10.58 (Move across X-axis)
+G04 P3000
+
+([06])
 G1 Z-0.02 F4.72 (Down by Step-depth)
-G1 X-2 F11.08 (Back to our starting point, but faster)
+G1 X2 F11.08 (Back to our starting point, but faster)
+G04 P3500
+
+([07])
+G1 Z-0.02 F4.72 (Down by Step-depth)
+G1 X2 F11.08 (Back to our starting point, but faster)
 G04 P2000
 
 ([02])
 G1 Z-0.02 F4.72 (Move down by Step-down)
 G1 X2 F14.16 (Move across X-axis
 G04 P2500
+
 G1 Z-0.02 F4.72 (Down by Step-depth)
-G1 X-2 F16.52 (Back to our starting point, but faster)
+G1 X2 F16.52 (Back to our starting point, but faster)
 G04 P3000
 
 
