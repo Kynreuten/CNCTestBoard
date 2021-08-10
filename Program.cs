@@ -13,11 +13,11 @@ namespace CNCTestBoard
 
             var tester = new BackAndForthRateTester
             {
-                FeedRateInitial = 15.0,
-                FeedRateIncrement = 0.5,
+                FeedRateInitial = 40.0,
+                FeedRateIncrement = 1,
                 StepDown = 0.025, //0.6mm
                 TestDistance = 3,
-                MaterialThickness = 0.5,
+                MaterialThickness = 0.39,
                 MaxIterations = 30,
                 RapidRate = 30,
                 SpindleSpeed = 20000,
