@@ -12,11 +12,11 @@ namespace GoldenLlama.Cnc.Test
         /// Absolute height above Z0 that should be "safe" for never hitting anything. Move to this before starting things.
         /// Defaults to 0.5"
         /// </summary>
-        public double ClearanceHeight { get; set; } = 0.5;
+        public double ClearanceHeight { get; set; } = 0.25;
         /// <summary>
         /// Absolute height above Z0 to move to prior to doing a rapid move. Defaults to 0.25"
         /// </summary>
-        public double RetractHeight { get; set; } = 0.25;
+        public double RetractHeight { get; set; } = 0.15;
         /// <summary>
         /// How fast to move when doing a Rapid Move. Defaults to 12 IPM
         /// </summary>
