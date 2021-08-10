@@ -67,8 +67,10 @@ namespace GoldenLlama.Cnc.Test
                 sb.AppendLine(RunOp.CutTo(new Vector { Z = -1 * StepDown })
                                     .Extend(GCode.RelativeCommand));
                 EstimatedLocation.Z -= StepDown;
-                if (i % 5 == 0) {
+                totalDepthEst = EstimatedLocation.Z.Value - StartLocation.Z.Value;
+                if (i % 1 == 0) {
                     sb.AppendLine(WriteComment($"Current Location: {this.EstimatedLocation}"));
+                    sb.AppendLine(WriteComment($"Est Depth: {totalDepthEst}"));
                 }
 
                 // Move proper distance on chosen axis
@@ -85,7 +87,7 @@ namespace GoldenLlama.Cnc.Test
                     pauseTime += PauseTimeIncrement;
 
                 // Make certain not to cut through our stock
-                if (totalDepthEst > (MaterialThickness + StepDown))
+                if (totalDepthEst <= -1 * (MaterialThickness + StepDown))
                 {
                     sb.AppendLine(MoveOver());
                 }
